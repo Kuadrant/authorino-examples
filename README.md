@@ -91,7 +91,7 @@ A bundle with Kubernetes manifests to deploy a [**Dex**](https://dexidp.io) serv
 ### a12n-server
 
 A bundle with Kubernetes manifests to deploy a [**a12n-server**](https://github.com/curveball/a12n-server) server and corresponding MySQL database, preloaded with the following setup:<br/>
-- Admin console: http://a12n-server:8531 (admin/123456)
+- Admin console: http://a12n-server:8531 (admin@demo/123456)
 - Preloaded clients:<br/>
   - **service-account-1**: to obtain access tokens via `client_credentials` OAuth2 grant type, to consume the Talker API (Client secret: DbgXROi3uhWYCxNUq_U1ZXjGfLHOIM8X3C2bJLpeEdE); includes metadata privilege: `{ "talker-api": ["read"] }` that can be used to write authorization policies
   - **talker-api**: to authenticate to the token introspect endpoint (Client secret: V6g-2Eq2ALB1_WHAswzoeZofJ_e86RI4tdjClDDDb4g)
