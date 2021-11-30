@@ -110,7 +110,7 @@ A bundle with Kubernetes manifests to deploy a [**a12n-server**](https://github.
 
 ### Talker Web
 
-Node.js web application that consumes resources of the [Talker API](#talker-api) from a web browser.
+Node.js Single Page Application (SPA) that consumes resources of the [Talker API](#talker-api) from a web browser.
 
 URL behind Envoy: http://talker-api-authorino.127.0.0.1.nip.io:8000/web
 
@@ -122,6 +122,12 @@ URL behind Envoy: http://talker-api-authorino.127.0.0.1.nip.io:8000/web
     </tr>
   </tbody>
 </table>
+
+### Matrix Quotes
+
+Node.js web application that gathers quotes from characters of the film _The Matrix_ (1999).
+
+If you haven't watched The Matrix yet, stop what you are doing, go watch it now, and then come back 🙂
 
 ### API consumer
 
@@ -156,4 +162,3 @@ Kubernetes manifests to deploy [**Limitador**](https://github.com/kuadrant/limit
     </tr>
   </tbody>
 </table>
-

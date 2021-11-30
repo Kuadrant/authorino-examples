@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: matrix-quotes
+  labels:
+    app: matrix-quotes
+spec:
+  selector:
+    matchLabels:
+      app: matrix-quotes
+  template:
+    metadata:
+      labels:
+        app: matrix-quotes
+    spec:
+      containers:
+      - name: webapp
+        image: quay.io/3scale/authorino-examples:matrix-quotes
+  replicas: 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: matrix-quotes
+spec:
+  selector:
+    app: matrix-quotes
+  ports:
+    - name: server
+      port: 3000
+      protocol: TCP
