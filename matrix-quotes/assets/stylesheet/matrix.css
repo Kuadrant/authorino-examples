@@ -1,0 +1,146 @@
+body {
+  background-image: url('../images/matrix.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  margin: 2vw;
+  color: white;
+  text-align: center;
+}
+
+h1 {
+  font-size: 3em;
+  margin-top: 1.5em;
+}
+
+.button {
+  background-color: #a0fb45;
+  border-radius: 0.8em;
+  color: darkgreen;
+  font-size: 1.3em;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 0.7em 1.5em;
+  position: fixed;
+  left: 2em;
+  top: 2em;
+}
+
+.button:hover {
+  background-color: #bfff7f;
+}
+
+.instructions {
+  font-size: 1.2em;
+  margin: 4em 0 2em 0;
+}
+
+h1, .instructions {
+  text-shadow: 0.1em 0 0.5em black;
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(0, -1px, 0);
+  }
+
+  20%, 80% {
+    transform: translate3d(0, 2px, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(0, -2px, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(0, 2px, 0);
+  }
+}
+
+.cards {
+  list-style-type: none;
+}
+
+.card, .quotes, form {
+  padding: 1em;
+  background-color: white;
+  border-radius: 1em;
+}
+
+.card {
+  float: left;
+  margin-left: 3vw;
+  width: 10vw;
+  filter: saturate(0);
+}
+
+.card:hover {
+  filter: saturate(1);
+  animation: shake 1.5s cubic-bezier(.36,.07,.19,.97) both;
+  transform: translate3d(0, 0, 0);
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+  border-radius: 0.2em;
+}
+
+.card p {
+  text-align: center;
+}
+
+.card a {
+  color: darkgreen;
+  text-decoration: none;
+}
+
+.character-name {
+  font-size: 1.6em;
+  font-style: bold;
+  margin-bottom: 0;
+}
+
+.character-description {
+  color: #888;
+  font-style: italic;
+  font-size: 0.9em;
+  margin-top: 1em;
+}
+
+.quotes {
+  width: 70vw;
+  list-style-type: none;
+  display: inline-block;
+}
+
+.quotes li {
+  font-size: 1.2em;
+  color: #333;
+  font-style: italic;
+  margin: 3em;
+  line-height: 1.3em;
+}
+
+.quotes li:before {
+  content: '“';
+  font-size: 3em;
+  line-height: 0.4em;
+  color: #999;
+  vertical-align: middle;
+  margin-right: 0.2em;
+}
+
+.character-photo {
+  width: 20vw;
+  border: 1em solid white;
+}
+
+form {
+  display: inline-block;
+}
+
+form input {
+  font-size: 1em;
+  padding: 0.5em;
+}
