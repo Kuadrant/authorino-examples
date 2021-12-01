@@ -16,6 +16,10 @@ spec:
       containers:
       - name: webapp
         image: quay.io/3scale/authorino-examples:matrix-quotes
+        imagePullPolicy: Always
+        env:
+        - name: ENDPOINT
+          value: http://matrix-quotes-authorino.127.0.0.1.nip.io:8000
   replicas: 1
 ---
 apiVersion: v1
