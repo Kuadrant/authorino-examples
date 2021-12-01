@@ -31,7 +31,7 @@ data:
                   - match:
                       safe_regex:
                         google_re2: {}
-                        regex: ^/(((index|login)\.html|assets/).*)?
+                        regex: ^/(((index|login)\.html|assets/|auth).*)?
                     route:
                       cluster: matrix-quotes
                     typed_per_filter_config:
