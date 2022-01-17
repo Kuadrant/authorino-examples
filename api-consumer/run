@@ -1,6 +1,7 @@
 #!/bin/sh
 
 INTERVAL="10"
+METHOD="GET"
 CREDENTIALS_IN="authorization_header"
 CREDENTIALS_KEY="Bearer"
 
@@ -11,6 +12,9 @@ while [[ $# -gt 0 ]]; do
   case $key in
     --endpoint )
       ENDPOINT="$val"
+      ;;
+    --method )
+      METHOD="$val"
       ;;
     --token )
       TOKEN="$val"
@@ -47,7 +51,7 @@ fi
 echo "Sending..."
 
 while true; do
-  curl -s -o /dev/null -w "%{http_code}" -H "$HEADER" "$ENDPOINT"
+  curl -s -o /dev/null -w "%{http_code}" -H "$HEADER" -X "$METHOD" "$ENDPOINT"
   echo ""
   sleep $INTERVAL
 done
