@@ -53,5 +53,8 @@ echo "Sending..."
 while true; do
   curl -s -o /dev/null -w "%{http_code}" -H "$HEADER" -X "$METHOD" "$ENDPOINT"
   echo ""
+  if [ "$INTERVAL" == "0" ]; then
+    exit 0
+  fi
   sleep $INTERVAL
 done
