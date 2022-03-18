@@ -941,7 +941,8 @@ data:
                 "uris": [
                   "/hello",
                   "/hi"
-                ]
+                ],
+                "resource_scopes": ["get", "post", "put", "delete"]
               },
               {
                 "name": "goodbye",
@@ -952,7 +953,8 @@ data:
                 "uris": [
                   "/goodbye",
                   "/bye"
-                ]
+                ],
+                "resource_scopes": ["get", "post", "put", "delete"]
               },
               {
                 "name": "greeting-1",
@@ -976,7 +978,8 @@ data:
                 "_id": "44f93c94-a8d0-4b33-8188-8173e86844d2",
                 "uris": [
                   "/greetings/1"
-                ]
+                ],
+                "resource_scopes": ["get", "post", "put", "delete"]
               },
               {
                 "name": "greeting-2",
@@ -1000,7 +1003,8 @@ data:
                 "_id": "14676f2e-709a-420f-9bc9-c1b01e29f18f",
                 "uris": [
                   "/greetings/2"
-                ]
+                ],
+                "resource_scopes": ["get", "post", "put", "delete"]
               }
             ],
             "policies": [],
