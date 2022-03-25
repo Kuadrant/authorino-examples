@@ -27,20 +27,20 @@ spec:
       keySelector: APIKEY
   authorization:
   - name: non-resource-endpoints
+    when:
+    - selector: context.request.http.path.@extract:{"sep":"/","pos":1}
+      operator: neq
+      value: resources
     kubernetes:
-      conditions:
-      - selector: context.request.http.path.@extract:{"sep":"/","pos":1}
-        operator: neq
-        value: resources
       user:
         valueFrom:
           authJSON: auth.identity.username
   - name: resource-endpoints
+    when:
+    - selector: context.request.http.path
+      operator: matches
+      value: ^/resources(/\w+)?
     kubernetes:
-      conditions:
-      - selector: context.request.http.path
-        operator: matches
-        value: ^/resources(/\w+)?
       user:
         valueFrom:
           authJSON: auth.identity.username
