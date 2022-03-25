@@ -6,6 +6,8 @@ Please refer to the Authorino [User guides](https://github.com/kuadrant/authorin
 
 ## Custom apps and deployments
 
+For each application below, you will usually find a `*-deploy.yaml` file in the corresponding directory of the application. This file contains the required manifests to deploy the application to a Kubernetes cluster.
+
 ### Talker API
 
 Just another echo API that responds as JSON whatever attributes it gets in the original HTTP request.
@@ -47,13 +49,17 @@ A bundle with Kubernetes manifests to deploy a [**Keycloak**](https://www.keyclo
 - Preloaded realm: **kuadrant**
 - Preloaded clients:
   - **demo**: to which API consumers delegate access and therefore the one which access tokens are issued to
-  - **authorino**: used by Authorino to fetch additional user info with `client_credentials` grant type
-  - **talker-api**: used by Authorino to fetch UMA-protected resource data associated with the Talker API
-- Preloaded resources:
+  - **talker-api**: used by Authorino to fetch UMA-protected resource data associated with the Talker API (Client secret: 523b92b6-625d-4e1e-a313-77e7a8ae4e88)
+- Preloaded resources (`talker-api` client):
   - `/hello`
   - `/greetings/1` (owned by user jonh)
   - `/greetings/2` (owned by user jane)
   - `/goodbye`
+- Preloaded authorization scopes (`talker-api` client):
+  - `get`
+  - `post`
+  - `put`
+  - `delete`
 - Realm roles:
   - member (default to all users)
   - admin
@@ -128,6 +134,15 @@ URL behind Envoy: http://talker-api-authorino.127.0.0.1.nip.io:8000/web
 Node.js web application that gathers quotes from characters of the film _The Matrix_ (1999).
 
 If you haven't watched The Matrix yet, stop what you are doing, go watch it now, and then come back 🙂
+
+<table>
+ <tbody>
+    <tr>
+      <th>Image:</th>
+      <td><a href="https://quay.io/3scale/authorino-examples:matrix-quotes"><code>quay.io/3scale/authorino-examples:matrix-quotes</code></a></td>
+    </tr>
+  </tbody>
+</table>
 
 ### API consumer
 
