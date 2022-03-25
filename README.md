@@ -133,6 +133,15 @@ Node.js web application that gathers quotes from characters of the film _The Mat
 
 If you haven't watched The Matrix yet, stop what you are doing, go watch it now, and then come back 🙂
 
+<table>
+ <tbody>
+    <tr>
+      <th>Image:</th>
+      <td><a href="https://quay.io/3scale/authorino-examples:matrix-quotes"><code>quay.io/3scale/authorino-examples:matrix-quotes</code></a></td>
+    </tr>
+  </tbody>
+</table>
+
 ### API consumer
 
 Simple script that curls a given endpoint in a loop, every X seconds. It only sends `GET` requests.
