@@ -6,6 +6,8 @@ Please refer to the Authorino [User guides](https://github.com/kuadrant/authorin
 
 ## Custom apps and deployments
 
+For each application below, you will usually find a `*-deploy.yaml` file in the corresponding directory of the application. This file contains the required manifests to deploy the application to a Kubernetes cluster.
+
 ### Talker API
 
 Just another echo API that responds as JSON whatever attributes it gets in the original HTTP request.
