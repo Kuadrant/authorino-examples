@@ -47,13 +47,17 @@ A bundle with Kubernetes manifests to deploy a [**Keycloak**](https://www.keyclo
 - Preloaded realm: **kuadrant**
 - Preloaded clients:
   - **demo**: to which API consumers delegate access and therefore the one which access tokens are issued to
-  - **authorino**: used by Authorino to fetch additional user info with `client_credentials` grant type
-  - **talker-api**: used by Authorino to fetch UMA-protected resource data associated with the Talker API
-- Preloaded resources:
+  - **talker-api**: used by Authorino to fetch UMA-protected resource data associated with the Talker API (Client secret: 523b92b6-625d-4e1e-a313-77e7a8ae4e88)
+- Preloaded resources (`talker-api` client):
   - `/hello`
   - `/greetings/1` (owned by user jonh)
   - `/greetings/2` (owned by user jane)
   - `/goodbye`
+- Preloaded authorization scopes (`talker-api` client):
+  - `get`
+  - `post`
+  - `put`
+  - `delete`
 - Realm roles:
   - member (default to all users)
   - admin
