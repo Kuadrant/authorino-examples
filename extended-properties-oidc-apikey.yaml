@@ -25,11 +25,11 @@ spec:
       value: ["admin"]
   authorization:
   - name: only-admins-can-delete
+    when:
+    - selector: context.request.http.method
+      operator: eq
+      value: DELETE
     json:
-      conditions:
-      - selector: context.request.http.method
-        operator: eq
-        value: DELETE
       rules:
       - selector: auth.identity.roles
         operator: incl
