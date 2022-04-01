@@ -165,6 +165,19 @@ Arguments:
   </tbody>
 </table>
 
+### IP Location
+
+Simple service to resolve an IPv4 address into geo location info.
+
+<table>
+ <tbody>
+    <tr>
+      <th>Image:</th>
+      <td><a href="https://quay.io/3scale/authorino-examples:ip-location"><code>quay.io/3scale/authorino-examples:ip-location</code></a></td>
+    </tr>
+  </tbody>
+</table>
+
 ### Limitador
 
 Kubernetes manifests to deploy [**Limitador**](https://github.com/kuadrant/limitador), pre-configured in the [reverse-proxy](#envoy) to rate-limit the [Talker API](#talker-api) app to 5 hits per minute per `user_id`.

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ip-location
+  labels:
+    app: ip-location
+spec:
+  selector:
+    matchLabels:
+      app: ip-location
+  template:
+    metadata:
+      labels:
+        app: ip-location
+    spec:
+      containers:
+      - name: ip-location
+        image: quay.io/3scale/authorino-examples:ip-location
+        imagePullPolicy: Always
+        env:
+        - name: PORT
+          value: "3000"
+        ports:
+        - containerPort: 3000
+        tty: true
+  replicas: 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ip-location
+spec:
+  selector:
+    app: ip-location
+  ports:
+    - port: 3000
+      protocol: TCP
