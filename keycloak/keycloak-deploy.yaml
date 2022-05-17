@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: keycloak
-          image: quay.io/keycloak/keycloak:15.0.2
+          image: quay.io/kuadrant/authorino-examples:keycloak-15.0.2
           env:
             - name: KEYCLOAK_USER
               value: admin
