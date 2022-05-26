@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: webapp
-        image: quay.io/3scale/authorino-examples:matrix-quotes
+        image: quay.io/kuadrant/authorino-examples:matrix-quotes
         imagePullPolicy: Always
         env:
         - name: ENDPOINT

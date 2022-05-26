@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: mysql
-        image: quay.io/3scale/authorino-examples:a12n-server-mysql
+        image: quay.io/kuadrant/authorino-examples:a12n-server-mysql
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3306
@@ -49,7 +49,7 @@ spec:
     spec:
       containers:
       - name: a12n-server
-        image: quay.io/3scale/authorino-examples:a12n-server
+        image: quay.io/kuadrant/authorino-examples:a12n-server
         imagePullPolicy: IfNotPresent
         env:
         - name: MYSQL_HOST

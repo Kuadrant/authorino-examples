@@ -16,7 +16,7 @@ Just another echo API that responds as JSON whatever attributes it gets in the o
  <tbody>
     <tr>
       <th>Image:</th>
-      <td><a href="https://quay.io/3scale/authorino-examples:talker-api"><code>quay.io/3scale/authorino-examples:talker-api</code></a></td>
+      <td><a href="https://quay.io/kuadrant/authorino-examples:talker-api"><code>quay.io/kuadrant/authorino-examples:talker-api</code></a></td>
     </tr>
   </tbody>
 </table>
@@ -107,8 +107,8 @@ A bundle with Kubernetes manifests to deploy a [**a12n-server**](https://github.
     <tr>
       <th>Images:</th>
       <td>
-        <a href="https://quay.io/3scale/authorino-examples:a12n-server"><code>quay.io/3scale/authorino-examples:a12n-server</code></a><br/>
-        <a href="https://quay.io/3scale/authorino-examples:a12n-server-mysql"><code>quay.io/3scale/authorino-examples:a12n-server-mysql</code></a>
+        <a href="https://quay.io/kuadrant/authorino-examples:a12n-server"><code>quay.io/kuadrant/authorino-examples:a12n-server</code></a><br/>
+        <a href="https://quay.io/kuadrant/authorino-examples:a12n-server-mysql"><code>quay.io/kuadrant/authorino-examples:a12n-server-mysql</code></a>
       </td>
     </tr>
   </tbody>
@@ -124,7 +124,7 @@ URL behind Envoy: http://talker-api-authorino.127.0.0.1.nip.io:8000/web
  <tbody>
     <tr>
       <th>Image:</th>
-      <td><a href="https://quay.io/3scale/authorino-examples:talker-web"><code>quay.io/3scale/authorino-examples:talker-web</code></a></td>
+      <td><a href="https://quay.io/kuadrant/authorino-examples:talker-web"><code>quay.io/kuadrant/authorino-examples:talker-web</code></a></td>
     </tr>
   </tbody>
 </table>
@@ -139,7 +139,7 @@ If you haven't watched The Matrix yet, stop what you are doing, go watch it now,
  <tbody>
     <tr>
       <th>Image:</th>
-      <td><a href="https://quay.io/3scale/authorino-examples:matrix-quotes"><code>quay.io/3scale/authorino-examples:matrix-quotes</code></a></td>
+      <td><a href="https://quay.io/kuadrant/authorino-examples:matrix-quotes"><code>quay.io/kuadrant/authorino-examples:matrix-quotes</code></a></td>
     </tr>
   </tbody>
 </table>
@@ -160,7 +160,7 @@ Arguments:
  <tbody>
     <tr>
       <th>Image:</th>
-      <td><a href="https://quay.io/3scale/authorino-examples:api-consumer"><code>quay.io/3scale/authorino-examples:api-consumer</code></a></td>
+      <td><a href="https://quay.io/kuadrant/authorino-examples:api-consumer"><code>quay.io/kuadrant/authorino-examples:api-consumer</code></a></td>
     </tr>
   </tbody>
 </table>
@@ -173,7 +173,7 @@ Simple service to resolve an IPv4 address into geo location info.
  <tbody>
     <tr>
       <th>Image:</th>
-      <td><a href="https://quay.io/3scale/authorino-examples:ip-location"><code>quay.io/3scale/authorino-examples:ip-location</code></a></td>
+      <td><a href="https://quay.io/kuadrant/authorino-examples:ip-location"><code>quay.io/kuadrant/authorino-examples:ip-location</code></a></td>
     </tr>
   </tbody>
 </table>

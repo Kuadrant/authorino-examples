@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: webapp
-        image: quay.io/3scale/authorino-examples:talker-web
+        image: quay.io/kuadrant/authorino-examples:talker-web
   replicas: 1
 ---
 apiVersion: v1
