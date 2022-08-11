@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: news-api
+  labels:
+    app: news-api
+spec:
+  selector:
+    matchLabels:
+      app: news-api
+  template:
+    metadata:
+      labels:
+        app: news-api
+    spec:
+      containers:
+      - name: news-api
+        image: quay.io/kuadrant/authorino-examples:news-api
+        imagePullPolicy: Always
+        env:
+        - name: PORT
+          value: "3000"
+        tty: true
+        ports:
+        - containerPort: 3000
+  replicas: 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: news-api
+  labels:
+    app: news-api
+spec:
+  selector:
+    app: news-api
+  ports:
+  - name: http
+    port: 3000
+    protocol: TCP

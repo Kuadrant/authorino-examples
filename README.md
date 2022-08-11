@@ -21,6 +21,44 @@ Just another echo API that responds as JSON whatever attributes it gets in the o
   </tbody>
 </table>
 
+### News API
+
+The News Agency API ("News API" for short) is a REST API with embedded concept of authentication or authorization. Whenever a request hits the API and it is a valid endpoint/operation, it serves the request. If it is a `POST` request to `/{category}`, it creates a news article under that news category. Creating an object here means storing it in memory. There is no persisted database. If it is a GET request to `/{category}`, it  serves the list of news articles in the category, as stored in memory. If it is a `GET` or `DELETE` to `/{category/(article-id}` it serves or deletes the requested object from memory, respectively.
+
+HTTP endpoints available:
+```
+POST /{category}          Create a news article
+GET /{category}           List news articles
+GET /{category}/{id}      Read a news article
+DELETE /{category}/{id}   Delete a news article
+```
+
+A news article is structured as follows:
+
+```jsonc
+{
+  "id": <string: auto-generated>,
+  "title": <string>,
+  "body": <string>,
+  "date": <string: ISO 8601>,
+  "author": <string>,
+  "user_id": <string>
+}
+```
+
+In the requests to `POST /{category}`, `author` and `user_id` can be supplied in either of 2 supported HTTP headers:
+- `X-Ext-Auth-Data`: stringified JSON containing at least the `author` and the `user_id` properties;
+- `X-Ext-Auth-Wristband`: an Authorino [Festival Wrisband](https://github.com/Kuadrant/authorino/blob/main/docs/features.md#festival-wristband-tokens-responsewristband) token whose `name` and `sub` claims map respectively to `author` and the `user_id`.
+
+<table>
+ <tbody>
+    <tr>
+      <th>Image:</th>
+      <td><a href="https://quay.io/kuadrant/authorino-examples:news-api"><code>quay.io/kuadrant/authorino-examples:news-api</code></a></td>
+    </tr>
+  </tbody>
+</table>
+
 ### Envoy
 
 Kubernetes manifests to deploy Envoy proxy – `ConfigMap`, `Deployment`, `Service` and `Ingress`.
