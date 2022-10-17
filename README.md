@@ -110,7 +110,7 @@ A bundle with Kubernetes manifests to deploy a [**Keycloak**](https://www.keyclo
  <tbody>
     <tr>
       <th>Image:</th>
-      <td><a href="https://quay.io/keycloak/keycloak:12.0.3"><code>quay.io/keycloak/keycloak:12.0.3</code></a></td>
+      <td><a href="quay.io/kuadrant/authorino-examples:keycloak-15.0.2"><code>quay.io/kuadrant/authorino-examples:keycloak-15.0.2</code></a></td>
     </tr>
   </tbody>
 </table>
