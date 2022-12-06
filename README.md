@@ -23,7 +23,7 @@ Just another echo API that responds as JSON whatever attributes it gets in the o
 
 ### News API
 
-The News Agency API ("News API" for short) is a REST API with embedded concept of authentication or authorization. Whenever a request hits the API and it is a valid endpoint/operation, it serves the request. If it is a `POST` request to `/{category}`, it creates a news article under that news category. Creating an object here means storing it in memory. There is no persisted database. If it is a GET request to `/{category}`, it  serves the list of news articles in the category, as stored in memory. If it is a `GET` or `DELETE` to `/{category/(article-id}` it serves or deletes the requested object from memory, respectively.
+The News Agency API ("News API" for short) is a REST API to manage news articles (Create, Read, Delete), with no embedded concept of authentication or authorization. Records are stored in memory (default) or in a Redis database (by supplying a `REDIS_URL` environment variable).
 
 HTTP endpoints available:
 ```

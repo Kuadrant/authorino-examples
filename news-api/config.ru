@@ -4,6 +4,8 @@ require 'logger'
 require 'json'
 require 'securerandom'
 require 'base64'
+require 'forwardable'
+require 'redis'
 
 Object.include(Module.new do
   def try(method, *args)
@@ -21,7 +23,7 @@ Hash.include(Module.new do
   end
 end)
 
-class Storage
+class MemoryStorage
   def initialize
     @news = {}
   end
@@ -48,6 +50,45 @@ class Storage
   end
 end
 
+class RedisStorage
+  def initialize(redis_url)
+    @storage = Redis.new(url: redis_url)
+  end
+
+  def list(category)
+    @storage.hgetall(category).values.map(&JSON.method(:parse)).map(&Article.method(:new))
+  end
+
+  def add(category, article)
+    @storage.hset(category, article.id, article.to_json)
+    article
+  end
+
+  def get(category, article_id)
+    article = @storage.hget(category, article_id)
+    Article.new(JSON.parse(article)) if article
+  end
+
+  def delete(category, article_id)
+    article = get(category, article_id)
+    article if @storage.hdel(category, article_id) > 0
+  end
+
+  def exists?(article_id)
+    @storage.scan(0).last.find { |category| @storage.hexists(category, article_id) }
+  end
+end
+
+class Storage
+  extend Forwardable
+  def_delegators :@storage, :list, :add, :get, :delete, :exists?
+
+  def initialize(config = {})
+    @storage = RedisStorage.new(config[:redis_url]) if config[:redis_url]
+    @storage ||= MemoryStorage.new
+  end
+end
+
 ATTRIBUTES = %i[title body date author user_id].freeze
 
 class Article < Struct.new(:id, *ATTRIBUTES, keyword_init: true)
@@ -62,7 +103,7 @@ end
 
 class RackApp
   def initialize
-    @storage = Storage.new
+    @storage = Storage.new(redis_url: ENV['REDIS_URL'])
     @logger = Logger.new(STDOUT)
     @logger.level = ENV['LOG_LEVEL'] || 'info'
   end
