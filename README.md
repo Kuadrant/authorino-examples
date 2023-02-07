@@ -27,7 +27,7 @@ The News Agency API ("News API" for short) is a REST API to manage news articles
 
 HTTP endpoints available:
 ```
-POST /{category}          Create a news article
+POST /{category}[/{id}]   Create a news article
 GET /{category}           List news articles
 GET /{category}/{id}      Read a news article
 DELETE /{category}/{id}   Delete a news article
@@ -37,7 +37,7 @@ A news article is structured as follows:
 
 ```jsonc
 {
-  "id": <string: auto-generated>,
+  "id": <string: auto-generated if not provided>,
   "title": <string>,
   "body": <string>,
   "date": <string: ISO 8601>,

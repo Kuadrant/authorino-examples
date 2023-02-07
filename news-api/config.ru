@@ -125,27 +125,29 @@ class RackApp
     extra_headers.merge!('X-Ext-Auth-Wristband' => env[X_AUTH_WRISTBAND_HEADER]) if env[X_AUTH_WRISTBAND_HEADER]
 
     response = case request_method
-               when 'GET'
-                 if article_id.to_s.empty?
-                  respond_with(storage.list(category).map(&:to_h), extra_headers: extra_headers)
-                else
-                  respond_with(storage.get(category, article_id), extra_headers: extra_headers)
-                 end
-               when 'POST'
-                 params = JSON.parse(request.body.read).symbolize_keys.slice(*ATTRIBUTES)
-                 date = Time.now
-                 author, user_id = parse_auth_data(env)
-                 article = loop do # prevents duplicate article id
-                   article = Article.create(params.merge(date: date, author: author, user_id: user_id))
-                   break article unless storage.exists?(article.id)
-                 end
+    when 'GET'
+      if article_id.to_s.empty?
+      respond_with(storage.list(category).map(&:to_h), extra_headers: extra_headers)
+    else
+      respond_with(storage.get(category, article_id), extra_headers: extra_headers)
+      end
+    when 'POST'
+      params = JSON.parse(request.body.read).symbolize_keys.slice(*ATTRIBUTES)
+      author, user_id = parse_auth_data(env)
+      params.merge!(date: Time.now, author: author, user_id: user_id)
 
-                 respond_with(storage.add(category, article), extra_headers: extra_headers)
-               when 'DELETE'
-                 respond_with(storage.delete(category, article_id), extra_headers: extra_headers)
-               else
-                 render :not_found
-               end
+      article = Article.new(id: article_id, **params) if article_id
+      article ||= loop do # prevents duplicate article id
+        article = Article.create(params)
+        break article unless storage.exists?(article.id)
+      end
+
+      storage.exists?(article.id) ? render(:unprocessable_entity) : respond_with(storage.add(category, article), extra_headers: extra_headers)
+    when 'DELETE'
+      respond_with(storage.delete(category, article_id), extra_headers: extra_headers)
+    else
+      render :not_found
+    end
   rescue StandardError => e
     response = render(e.try(:status) || :server_error, body: e.message)
   ensure
@@ -167,6 +169,10 @@ class RackApp
 
   def render_not_found(*)
     [404, *json_response(error: 'Not found')]
+  end
+
+  def render_unprocessable_entity(*)
+    [422, *json_response(error: 'Unprocessable Entity')]
   end
 
   def render_server_error(message)
