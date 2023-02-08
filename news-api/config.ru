@@ -118,6 +118,8 @@ class RackApp
     request_query_string = request.query_string
     request_query_string = nil if request_query_string.empty?
 
+    return response = render(:ok) if env[X_TEST_REQUEST_HEADER]
+
     _, category, article_id = request_path.split('/')
 
     extra_headers = {}
@@ -158,25 +160,28 @@ class RackApp
 
   X_AUTH_DATA_HEADER = 'HTTP_X_EXT_AUTH_DATA'
   X_AUTH_WRISTBAND_HEADER = 'HTTP_X_EXT_AUTH_WRISTBAND'
+  X_TEST_REQUEST_HEADER = 'HTTP_X_TEST_REQUEST'
 
-  def json_response(body)
+  def encode(body)
+    return [{'Content-Type' => 'text/plain'}, []] unless body
+
     [{'Content-Type' => 'application/json'}, [body.to_json]]
   end
 
   def render_ok(body)
-    [200, *json_response(body)]
+    [200, *encode(body)]
   end
 
   def render_not_found(*)
-    [404, *json_response(error: 'Not found')]
+    [404, *encode(error: 'Not found')]
   end
 
   def render_unprocessable_entity(*)
-    [422, *json_response(error: 'Unprocessable Entity')]
+    [422, *encode(error: 'Unprocessable Entity')]
   end
 
   def render_server_error(message)
-    [500, *json_response(error: message)]
+    [500, *encode(error: message)]
   end
 
   def render(status, body: nil)
