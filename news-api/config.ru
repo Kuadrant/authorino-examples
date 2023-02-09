@@ -129,10 +129,33 @@ class RackApp
     response = case request_method
     when 'GET'
       if article_id.to_s.empty?
-        list = storage.list(category)
-        ids = env[X_FILTER_IDS].to_s.split(',').map(&:strip)
-        list.filter!{ |article| ids.include?(article.id) } if ids.any?
-        respond_with(list.map(&:to_h), extra_headers: extra_headers)
+        list = storage.list(category).map(&:to_h)
+
+        if env[X_FILTER]
+          hashify_id = -> (id) { { id: id } }
+
+          filter = begin
+            [JSON.parse(env[X_FILTER])].flatten.map do |value|
+              case value
+              when Hash
+                hash = value.symbolize_keys
+                (hash.include?(:id) || hash.include?(:ids)) ? [hash.delete(:id), hash.delete(:ids)].flatten.compact.map{ |id| hash.merge(id: id) } : hash
+              else
+                value.to_s.split(',').map(&hashify_id)
+              end
+            end.flatten
+          rescue JSON::ParserError
+            env[X_FILTER].to_s.split(',').map(&hashify_id)
+          end
+          list.filter! do |article|
+            filter.any? { |allowed|
+              logger.debug "Checking if article #{article.to_h} matches x-filter entry #{allowed}"
+              article.values_at(*allowed.keys) == allowed.values
+            }
+          end
+        end
+
+        respond_with(list, extra_headers: extra_headers)
       else
         respond_with(storage.get(category, article_id), extra_headers: extra_headers)
       end
@@ -164,7 +187,7 @@ class RackApp
   X_AUTH_DATA_HEADER = 'HTTP_X_EXT_AUTH_DATA'
   X_AUTH_WRISTBAND_HEADER = 'HTTP_X_EXT_AUTH_WRISTBAND'
   X_TEST_REQUEST_HEADER = 'HTTP_X_TEST_REQUEST'
-  X_FILTER_IDS = 'HTTP_X_FILTER_IDS'
+  X_FILTER = 'HTTP_X_FILTER'
 
   def encode(body)
     return [{'Content-Type' => 'text/plain'}, []] unless body
