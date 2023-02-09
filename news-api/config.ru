@@ -129,9 +129,12 @@ class RackApp
     response = case request_method
     when 'GET'
       if article_id.to_s.empty?
-      respond_with(storage.list(category).map(&:to_h), extra_headers: extra_headers)
-    else
-      respond_with(storage.get(category, article_id), extra_headers: extra_headers)
+        list = storage.list(category)
+        ids = env[X_FILTER_IDS].to_s.split(',').map(&:strip)
+        list.filter!{ |article| ids.include?(article.id) } if ids.any?
+        respond_with(list.map(&:to_h), extra_headers: extra_headers)
+      else
+        respond_with(storage.get(category, article_id), extra_headers: extra_headers)
       end
     when 'POST'
       params = JSON.parse(request.body.read).symbolize_keys.slice(*ATTRIBUTES)
@@ -161,6 +164,7 @@ class RackApp
   X_AUTH_DATA_HEADER = 'HTTP_X_EXT_AUTH_DATA'
   X_AUTH_WRISTBAND_HEADER = 'HTTP_X_EXT_AUTH_WRISTBAND'
   X_TEST_REQUEST_HEADER = 'HTTP_X_TEST_REQUEST'
+  X_FILTER_IDS = 'HTTP_X_FILTER_IDS'
 
   def encode(body)
     return [{'Content-Type' => 'text/plain'}, []] unless body
