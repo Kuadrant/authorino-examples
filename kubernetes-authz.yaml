@@ -16,8 +16,9 @@ spec:
         authJSON: auth.identity.sub
   - name: api-key-users
     apiKey:
-      labelSelectors:
-        audiences: talker-api
+      selector:
+        matchLabels:
+          audiences: talker-api
     extendedProperties:
     - name: username
       valueFrom:
