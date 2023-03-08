@@ -44,8 +44,9 @@ spec:
   identity:
   - name: api-clients
     apiKey:
-      labelSelectors:
-        authorino.kuadrant.io/managed-by: authorino
+      selector:
+        matchLabels:
+          authorino.kuadrant.io/managed-by: authorino
     credentials:
       in: authorization_header
       keySelector: APIKEY
