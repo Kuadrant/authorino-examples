@@ -2,11 +2,39 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   labels:
-    app: authorino
+    app: envoy
   name: envoy
 data:
   envoy.yaml: |
     static_resources:
+      clusters:
+      - name: authorino
+        connect_timeout: 0.25s
+        type: STRICT_DNS
+        lb_policy: ROUND_ROBIN
+        http2_protocol_options: {}
+        load_assignment:
+          cluster_name: authorino
+          endpoints:
+          - lb_endpoints:
+            - endpoint:
+                address:
+                  socket_address:
+                    address: authorino-authorino-authorization.hello-world.svc.cluster.local
+                    port_value: 50051
+      - name: talker-api
+        connect_timeout: 0.25s
+        type: STRICT_DNS
+        lb_policy: ROUND_ROBIN
+        load_assignment:
+          cluster_name: talker-api
+          endpoints:
+          - lb_endpoints:
+            - endpoint:
+                address:
+                  socket_address:
+                    address: talker-api.hello-world.svc.cluster.local
+                    port_value: 3000
       listeners:
       - address:
           socket_address:
@@ -18,6 +46,7 @@ data:
             typed_config:
               "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
               stat_prefix: local
+              use_remote_address: true
               route_config:
                 name: local_route
                 virtual_hosts:
@@ -42,39 +71,11 @@ data:
                   include_peer_certificate: true
                   grpc_service:
                     envoy_grpc:
-                      cluster_name: external_auth
+                      cluster_name: authorino
                     timeout: 1s
               - name: envoy.filters.http.router
-                typed_config: {}
-              use_remote_address: true
-      clusters:
-      - name: external_auth
-        connect_timeout: 0.25s
-        type: strict_dns
-        lb_policy: round_robin
-        http2_protocol_options: {}
-        load_assignment:
-          cluster_name: external_auth
-          endpoints:
-          - lb_endpoints:
-            - endpoint:
-                address:
-                  socket_address:
-                    address: authorino-authorino-authorization.hello-world.svc.cluster.local
-                    port_value: 50051
-      - name: talker-api
-        connect_timeout: 0.25s
-        type: strict_dns
-        lb_policy: round_robin
-        load_assignment:
-          cluster_name: talker-api
-          endpoints:
-          - lb_endpoints:
-            - endpoint:
-                address:
-                  socket_address:
-                    address: talker-api.hello-world.svc.cluster.local
-                    port_value: 3000
+                typed_config:
+                  "@type": type.googleapis.com/envoy.extensions.filters.http.router.v3.Router
     admin:
       access_log_path: "/tmp/admin_access.log"
       address:
@@ -86,20 +87,17 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: authorino
-    svc: envoy
+    app: envoy
   name: envoy
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: authorino
-      svc: envoy
+      app: envoy
   template:
     metadata:
       labels:
-        app: authorino
-        svc: envoy
+        app: envoy
     spec:
       containers:
       - args:
@@ -109,7 +107,7 @@ spec:
         - --component-log-level filter:trace,http:debug,router:debug
         command:
         - /usr/local/bin/envoy
-        image: envoyproxy/envoy:v1.19-latest
+        image: envoyproxy/envoy:v1.25-latest
         name: envoy
         ports:
         - containerPort: 8000
@@ -132,7 +130,7 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: authorino
+    app: envoy
   name: envoy
 spec:
   ports:
@@ -140,5 +138,4 @@ spec:
     port: 8000
     protocol: TCP
   selector:
-    app: authorino
-    svc: envoy
+    app: envoy
