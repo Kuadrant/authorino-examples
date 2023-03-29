@@ -75,7 +75,7 @@ The external authorization filter is disabled for the endpoints of the Talker We
  <tbody>
     <tr>
       <th>Image:</th>
-      <td><a href="https://hub.docker.com/r/envoyproxy/envoy/tags/?page=1&name=v1.19-latest"><code>envoyproxy/envoy:v1.19-latest</code></a></td>
+      <td><a href="https://hub.docker.com/r/envoyproxy/envoy/tags/?page=1&name=v1.25-latest"><code>envoyproxy/envoy:v1.25-latest</code></a></td>
     </tr>
   </tbody>
 </table>
