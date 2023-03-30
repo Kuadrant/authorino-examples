@@ -14,8 +14,8 @@ data:
           grpc:
           http:
     exporters:
-      jaeger:
-        endpoint: jaeger:14250
+      otlp:
+        endpoint: "otel-collector:4317"
         tls:
           insecure: true
         sending_queue:
@@ -42,7 +42,7 @@ data:
         traces:
           receivers: [otlp]
           processors: [memory_limiter, batch]
-          exporters: [jaeger]
+          exporters: [otlp]
 ---
 apiVersion: apps/v1
 kind: DaemonSet
@@ -118,8 +118,8 @@ data:
         # Memory Ballast size should be max 1/3 to 1/2 of memory.
         size_mib: 683
     exporters:
-      otlp:
-        endpoint: "http://someotlp.target.com:4317" # Replace with a real endpoint.
+      jaeger:
+        endpoint: jaeger:14250
         tls:
           insecure: true
     service:
@@ -128,7 +128,7 @@ data:
         traces/1:
           receivers: [otlp]
           processors: [memory_limiter, batch]
-          exporters: [otlp]
+          exporters: [jaeger]
 ---
 apiVersion: v1
 kind: Service
