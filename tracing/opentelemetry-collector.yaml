@@ -63,11 +63,11 @@ spec:
         component: otel-agent
     spec:
       containers:
-      - command:
+      - name: otel-agent
+        image: otel/opentelemetry-collector:0.74.0
+        command:
           - "/otelcol"
           - "--config=/conf/otel-agent-config.yaml"
-        image: otel/opentelemetry-collector:0.74.0
-        name: otel-agent
         resources:
           limits:
             cpu: 500m
@@ -77,18 +77,19 @@ spec:
             memory: 100Mi
         ports:
         - containerPort: 55679 # ZPages endpoint.
-        - containerPort: 4317 # Default OpenTelemetry receiver port.
+        - containerPort: 4317 # Default OpenTelemetry receiver gRPC port.
+        - containerPort: 4318 # Default OpenTelemetry receiver HTTP port.
         - containerPort: 8888  # Metrics.
         volumeMounts:
         - name: otel-agent-config-vol
           mountPath: /conf
       volumes:
-        - configMap:
+        - name: otel-agent-config-vol
+          configMap:
             name: otel-agent-conf
             items:
-              - key: otel-agent-config
-                path: otel-agent-config.yaml
-          name: otel-agent-config-vol
+            - key: otel-agent-config
+              path: otel-agent-config.yaml
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -174,11 +175,11 @@ spec:
         component: otel-collector
     spec:
       containers:
-      - command:
+      - name: otel-collector
+        image: otel/opentelemetry-collector:0.74.0
+        command:
           - "/otelcol"
           - "--config=/conf/otel-collector-config.yaml"
-        image: otel/opentelemetry-collector:0.74.0
-        name: otel-collector
         resources:
           limits:
             cpu: 1
@@ -188,7 +189,8 @@ spec:
             memory: 400Mi
         ports:
         - containerPort: 55679 # Default endpoint for ZPages.
-        - containerPort: 4317 # Default endpoint for OpenTelemetry receiver.
+        - containerPort: 4317 # Default endpoint for OpenTelemetry gRPC receiver.
+        - containerPort: 4318 # Default endpoint for OpenTelemetry HTTP receiver.
         - containerPort: 14250 # Default endpoint for Jaeger gRPC receiver.
         - containerPort: 14268 # Default endpoint for Jaeger HTTP receiver.
         - containerPort: 9411 # Default endpoint for Zipkin receiver.
@@ -196,19 +198,10 @@ spec:
         volumeMounts:
         - name: otel-collector-config-vol
           mountPath: /conf
-#        - name: otel-collector-secrets
-#          mountPath: /secrets
       volumes:
-        - configMap:
+        - name: otel-collector-config-vol
+          configMap:
             name: otel-collector-conf
             items:
               - key: otel-collector-config
                 path: otel-collector-config.yaml
-          name: otel-collector-config-vol
-#        - secret:
-#            name: otel-collector-secrets
-#            items:
-#              - key: cert.pem
-#                path: cert.pem
-#              - key: key.pem
-#                path: key.pem
