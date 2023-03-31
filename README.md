@@ -231,7 +231,7 @@ Kubernetes manifests to deploy [**Limitador**](https://github.com/kuadrant/limit
 
 ### Tracing (OpenTelemetry and Jaeger)
 
-Kubernetes manifests to deploy [Jaeger](https://www.jaegertracing.io/) and [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) with the Jaeger exporter configured.
+Kubernetes manifests to deploy [Jaeger](https://www.jaegertracing.io/) and [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) (with the Jaeger exporter configured).
 
 <table>
  <tbody>
@@ -240,6 +240,7 @@ Kubernetes manifests to deploy [Jaeger](https://www.jaegertracing.io/) and [Open
       <td>
         <a href="https://hub.docker.com/r/jaegertracing/all-in-one/tags/?page=1&name=1.22"><code>jaegertracing/all-in-one:1.22</code></a><br/>
         <a href="https://hub.docker.com/r/otel/opentelemetry-collector/tags/?page=1&name=0.74.0"><code>otel/opentelemetry-collector:0.74.0</code></a>
+        <a href="https://hub.docker.com/r/otel/opentelemetry-collector-contrib/tags/?page=1&name=0.74.0"><code>otel/opentelemetry-collector-contrib:0.74.0</code></a>
       </td>
     </tr>
   </tbody>

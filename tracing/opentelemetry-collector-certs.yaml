@@ -1,0 +1,52 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  labels:
+    app: otel
+  name: otel-ca-cert
+  namespace: $(NAMESPACE)
+spec:
+  commonName: '*.$(NAMESPACE).svc'
+  isCA: true
+  issuerRef:
+    kind: Issuer
+    name: otel-ca
+  secretName: otel-ca-cert
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  labels:
+    app: otel
+  name: otel-ca
+  namespace: $(NAMESPACE)
+spec:
+  selfSigned: {}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  labels:
+    app: otel
+  name: otel-server-cert
+  namespace: $(NAMESPACE)
+spec:
+  dnsNames:
+  - otel-collector
+  - otel-collector.$(NAMESPACE).svc
+  - otel-collector.$(NAMESPACE).svc.cluster.local
+  issuerRef:
+    kind: Issuer
+    name: otel-cert-issuer
+  secretName: otel-server-cert
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  labels:
+    app: otel
+  name: otel-cert-issuer
+  namespace: $(NAMESPACE)
+spec:
+  ca:
+    secretName: otel-ca-cert

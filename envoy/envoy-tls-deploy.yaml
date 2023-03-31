@@ -84,19 +84,6 @@ data:
                   socket_address:
                     address: otel-collector
                     port_value: 4317
-      - name: jaeger
-        connect_timeout: 0.25s
-        type: STRICT_DNS
-        lb_policy: ROUND_ROBIN
-        load_assignment:
-          cluster_name: jaeger
-          endpoints:
-          - lb_endpoints:
-            - endpoint:
-                address:
-                  socket_address:
-                    address: jaeger
-                    port_value: 9411
       listeners:
       - address:
           socket_address:
@@ -160,27 +147,17 @@ data:
                 typed_config:
                   "@type": type.googleapis.com/envoy.extensions.filters.http.router.v3.Router
 
-              # # Uncomment the lines below to enable tracing
-              # # Choose either OpenTelemetry OTLP (gRPC) or Zipkin/Jaeger (HTTP), and uncomment the correspoding config
+              # # Uncomment to enable tracing
               # tracing:
               #   provider:
-              #     # #------------ OpenTelemetry OTLP (gRPC) ------------
-              #     # name: envoy.tracers.opentelemetry
-              #     # typed_config:
-              #     #   "@type": type.googleapis.com/envoy.config.trace.v3.OpenTelemetryConfig
-              #     #   grpc_service:
-              #     #     envoy_grpc:
-              #     #       cluster_name: opentelemetry
-              #     #     timeout: 1s
-              #     #   service_name: envoy
-              #     # #-------------- Zipkin/Jaeger (HTTP) --------------
-              #     # name: envoy.tracers.zipkin
-              #     # typed_config:
-              #     #   "@type": type.googleapis.com/envoy.config.trace.v3.ZipkinConfig
-              #     #   collector_cluster: jaeger
-              #     #   collector_endpoint: "/api/v2/spans"
-              #     #   shared_span_context: false
-              #     #   collector_endpoint_version: HTTP_JSON
+              #     name: envoy.tracers.opentelemetry
+              #     typed_config:
+              #       "@type": type.googleapis.com/envoy.config.trace.v3.OpenTelemetryConfig
+              #       grpc_service:
+              #         envoy_grpc:
+              #           cluster_name: opentelemetry
+              #         timeout: 1s
+              #       service_name: envoy
     admin:
       access_log_path: "/tmp/admin_access.log"
       address:
