@@ -140,7 +140,7 @@ metadata:
   name: ingress-wildcard-host
 spec:
   rules:
-    - host: "talker-api-authorino.127.0.0.1.nip.io"
+    - host: "talker-api.127.0.0.1.nip.io"
       http:
         paths:
           - pathType: Prefix
