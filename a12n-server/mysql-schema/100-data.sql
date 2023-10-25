@@ -2,7 +2,7 @@ USE a12nserver;
 
 INSERT INTO principals(identity, nickname, type, active, created_at, modified_at)
 VALUES ('mailto:admin@demo', 'admin', 1, 1, now(), now()), /* id=1 */
-       ('http://talker-api-authorino.127.0.0.1.nip.io:8000', 'talker-api', 2, 1, now(), now()), /* id=2 */
+       ('http://talker-api.127.0.0.1.nip.io:8000', 'talker-api', 2, 1, now(), now()), /* id=2 */
        ('http://demo.app', 'consumer', 2, 1, now(), now()); /* id=3 */
 
 INSERT INTO user_passwords(password)

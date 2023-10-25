@@ -156,7 +156,7 @@ A bundle with Kubernetes manifests to deploy a [**a12n-server**](https://github.
 
 Node.js Single Page Application (SPA) that consumes resources of the [Talker API](#talker-api) from a web browser.
 
-URL behind Envoy: http://talker-api-authorino.127.0.0.1.nip.io:8000/web
+URL behind Envoy: http://talker-api.127.0.0.1.nip.io:8000/web
 
 <table>
  <tbody>

@@ -15,7 +15,7 @@ app.get('/web/auth/redirect', (req, res) => {
   params.append('code', requestToken)
   params.append('client_id', clientID)
   params.append('client_secret', clientSecret)
-  params.append('redirect_uri', 'http://talker-api-authorino.127.0.0.1.nip.io:8000/web/auth/redirect')
+  params.append('redirect_uri', 'http://talker-api.127.0.0.1.nip.io:8000/web/auth/redirect')
 
   axios.post('http://dex:5556/token', params).then(response => {
     const accessToken = response.data.access_token
