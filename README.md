@@ -83,7 +83,7 @@ The external authorization filter is disabled for the endpoints of the Talker We
 ### Keycloak
 
 A bundle with Kubernetes manifests to deploy a [**Keycloak**](https://www.keycloak.org) server, preloaded with the following realm setup:<br/>
-- Admin console: http://localhost:8080/auth/admin (admin/p)
+- Admin console: http://localhost:8080/admin (admin/p)
 - Preloaded realm: **kuadrant**
 - Preloaded clients:
   - **demo**: to which API consumers delegate access and therefore the one which access tokens are issued to
@@ -110,7 +110,7 @@ A bundle with Kubernetes manifests to deploy a [**Keycloak**](https://www.keyclo
  <tbody>
     <tr>
       <th>Image:</th>
-      <td><a href="quay.io/kuadrant/authorino-examples:keycloak-15.0.2"><code>quay.io/kuadrant/authorino-examples:keycloak-15.0.2</code></a></td>
+      <td><a href="quay.io/keycloak/keycloak:22.0"><code>quay.io/keycloak/keycloak:22.0</code></a></td>
     </tr>
   </tbody>
 </table>
