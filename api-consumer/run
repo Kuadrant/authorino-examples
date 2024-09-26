@@ -63,13 +63,27 @@ if [ "$DEBUG" == "true" ]; then
   echo ""
 fi
 
+running=true
+
+handle_sigterm() {
+  echo "Stopping..."
+  running=false
+}
+
+trap handle_sigterm SIGTERM
+
 echo "Sending..."
 
-while true; do
+while $running; do
   eval $curl_cmd
   echo ""
   if [ "$interval" == "0" ]; then
     exit 0
   fi
-  sleep $interval
+  for ((i=1; i<=$interval; i++)); do
+    if ! $running; then
+      exit 0
+    fi
+    sleep 1
+  done
 done
