@@ -1,7 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
 INTERVAL="10"
 METHOD="GET"
+HEADERS=()
 CREDENTIALS_IN="authorization_header"
 CREDENTIALS_KEY="Bearer"
 
@@ -16,6 +17,9 @@ while [[ $# -gt 0 ]]; do
     --method )
       METHOD="$val"
       ;;
+    --header )
+      HEADERS+=("$val")
+      ;;
     --token )
       TOKEN="$val"
       ;;
@@ -28,8 +32,14 @@ while [[ $# -gt 0 ]]; do
     --credentials-key )
       CREDENTIALS_KEY="$val"
       ;;
+    --insecure )
+      INSECURE="--insecure"
+      ;;
     --interval )
       INTERVAL="$val"
+      ;;
+    --debug )
+      DEBUG="true"
       ;;
     * )
       ;;
@@ -39,19 +49,42 @@ while [[ $# -gt 0 ]]; do
 done
 
 if [ "$CREDENTIALS_IN" == "authorization_header" ]; then
-  HEADER="Authorization: $CREDENTIALS_KEY $TOKEN"
+  HEADERS+=("Authorization: $CREDENTIALS_KEY $TOKEN")
 elif [ "$CREDENTIALS_IN" == "custom_header" ]; then
-  HEADER="${CREDENTIALS_KEY}: $TOKEN"
+  HEADERS+=("${CREDENTIALS_KEY}: $TOKEN")
 elif [ "$CREDENTIALS_IN" == "cookie" ]; then
-  HEADER="Cookie: $CREDENTIALS_KEY=$TOKEN"
+  HEADERS+=("Cookie: $CREDENTIALS_KEY=$TOKEN")
 elif [ "$CREDENTIALS_IN" == "query" ]; then
   ENDPOINT="$ENDPOINT?$CREDENTIALS_KEY=$TOKEN"
+fi
+
+if [ "$DEBUG" != "true" ]; then
+  curl_cmd="curl -s -o /dev/null -w \"%{http_code}\" "
+else
+  curl_cmd="curl -v "
+fi
+
+if [[ "$METHOD" != "GET" ]]; then
+  curl_cmd+="-X $METHOD "
+fi
+
+for h in "${HEADERS[@]}"
+do
+  curl_cmd+="-H \"$h\" "
+done
+
+curl_cmd+="$INSECURE \"$ENDPOINT\""
+
+if [ "$DEBUG" == "true" ]; then
+  echo "Command: $curl_cmd"
+  echo "Interval: $INTERVAL"
+  echo ""
 fi
 
 echo "Sending..."
 
 while true; do
-  curl -s -o /dev/null -w "%{http_code}" -H "$HEADER" -X "$METHOD" "$ENDPOINT"
+  eval $curl_cmd
   echo ""
   if [ "$INTERVAL" == "0" ]; then
     exit 0

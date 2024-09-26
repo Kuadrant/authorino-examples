@@ -1,7 +1,9 @@
-FROM curlimages/curl
+FROM alpine:latest
+
+RUN apk update && apk add --no-cache bash curl
 
 WORKDIR /usr/src/app
 
 COPY run run
 
-ENTRYPOINT [ "sh", "-c" ]
+CMD ["/bin/bash"]
