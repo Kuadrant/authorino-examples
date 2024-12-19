@@ -1,4 +1,4 @@
-FROM mysql/mysql-server:8.0
+FROM mirror.gcr.io/mysql/mysql-server:8.0
 
 ENV MYSQL_DATABASE=a12nserver
 ENV MYSQL_USER=a12nserver
