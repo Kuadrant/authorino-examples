@@ -2,4 +2,5 @@ tmp
 
 # editor and IDE paraphernalia
 .vscode
+.idea/
 **/.DS_Store
