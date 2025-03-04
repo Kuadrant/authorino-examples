@@ -1,16 +1,16 @@
-apiVersion: authorino.kuadrant.io/v1beta1
+apiVersion: authorino.kuadrant.io/v1beta3
 kind: AuthConfig
 metadata:
   name: talker-api-protection
 spec:
   hosts:
   - talker-api.127.0.0.1.nip.io
-  identity:
-  - name: api-clients
-    apiKey:
-      selector:
-        matchLabels:
-          group: friends
-    credentials:
-      in: authorization_header
-      keySelector: APIKEY
+  authentication:
+    "api-clients":
+      apiKey:
+        selector:
+          matchLabels:
+            group: friends
+      credentials:
+        authorizationHeader:
+          prefix: APIKEY
